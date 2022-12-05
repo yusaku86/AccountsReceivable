@@ -211,8 +211,8 @@ Public Sub fetchCodeAndName()
     With ThisWorkbook.Sheets("銀行明細")
 
         '// 取引先コード列・取引先名をXLOOKUPでデータベースファイルから取得
-        .Cells(6, 3).Formula = "=XLOOKUP([@口座名義],[customers.xlsx]customers!$C:$C,[customers.xlsx]customers!$A:$A,""取引先が見つかりません"",0)"
-        .Cells(6, 4).Formula = "=XLOOKUP([@口座名義],[customers.xlsx]customers!$C:$C,[customers.xlsx]customers!$B:$B,""取引先が見つかりません"",0)"
+        .Cells(6, 3).Formula = "=IFERROR(INDIRECT(""[customers.xlsx]customers!"" & ""A"" & MATCH([@口座名義],[customers.xlsx]customers!$C:$C,0),TRUE),""取引先が見つかりません"")"
+        .Cells(6, 4).Formula = "=IFERROR(INDIRECT(""[customers.xlsx]customers!"" & ""B"" & MATCH([@口座名義],[customers.xlsx]customers!$C:$C,0),TRUE),""取引先が見つかりません"")"
         
         .Cells(6, 3).AutoFill .Range(.Cells(6, 3), .Cells(Rows.Count, 2).End(xlUp).Offset(, 1)), xlFillValues
         .Cells(6, 4).AutoFill .Range(.Cells(6, 4), .Cells(Rows.Count, 2).End(xlUp).Offset(, 2)), xlFillValues
